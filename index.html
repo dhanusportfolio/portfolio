@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Dhanus CT Ramesh | Bioinformatics</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg:#0a0e17;--bg2:#0f1420;--bg3:#141926;--card:#161d2e;
+    --border:#1e2a42;--accent:#4f8ef7;--accent2:#7dd3c0;--accent3:#f0a05a;
+    --text:#e8edf5;--muted:#8090b0;--faint:#2a3550;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{background:var(--bg);color:var(--text);font-family:'Outfit',sans-serif;font-size:16px;line-height:1.7;overflow-x:hidden;}
+  body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:0.4;}
+
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0.75rem 3rem;background:rgba(10,14,23,0.88);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);}
+  .nav-logo{display:flex;flex-direction:column;line-height:1.2;text-decoration:none;}
+  .nav-logo-main{font-family:'DM Serif Display',serif;font-size:1.1rem;color:var(--text);letter-spacing:0.02em;}
+  .nav-logo-main span{color:var(--accent);}
+  .nav-logo-full{font-family:'Outfit',sans-serif;font-size:0.58rem;color:var(--muted);letter-spacing:0.07em;text-transform:uppercase;font-weight:400;}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{color:var(--muted);text-decoration:none;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s;}
+  .nav-links a:hover{color:var(--accent);}
+
+  /* HERO */
+  #hero{min-height:100vh;display:flex;align-items:center;padding:0 3rem;position:relative;overflow:hidden;}
+  .hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.22;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);}
+  .hero-glow{position:absolute;top:15%;left:5%;width:500px;height:500px;background:radial-gradient(circle,rgba(79,142,247,0.11) 0%,transparent 70%);pointer-events:none;}
+  .hero-glow2{position:absolute;bottom:10%;right:5%;width:380px;height:380px;background:radial-gradient(circle,rgba(125,211,192,0.08) 0%,transparent 70%);pointer-events:none;}
+  .hero-inner{position:relative;z-index:1;width:100%;max-width:760px;}
+
+
+
+  .hero-tag{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.3);padding:0.28rem 0.9rem;border-radius:100px;font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--accent);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:1.4rem;}
+  .hero-tag::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
+  .hero-name{font-family:'DM Serif Display',serif;font-size:clamp(2.8rem,6vw,5rem);line-height:1.05;color:var(--text);margin-bottom:0.3rem;}
+  .hero-name em{color:var(--accent);font-style:italic;}
+  .hero-subtitle{font-size:1rem;color:var(--muted);font-weight:300;max-width:520px;margin-bottom:2rem;border-left:2px solid var(--accent2);padding-left:1rem;line-height:1.7;}
+  .hero-meta{display:flex;flex-wrap:wrap;gap:1.2rem;font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted);margin-bottom:2rem;}
+  .hero-meta span{display:flex;align-items:center;gap:0.4rem;}
+  .hero-btns{display:flex;gap:1rem;flex-wrap:wrap;}
+  .btn{display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.5rem;border-radius:6px;font-size:0.83rem;font-weight:500;letter-spacing:0.04em;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;}
+  .btn-primary{background:var(--accent);color:#fff;}
+  .btn-primary:hover{background:#6ba3ff;transform:translateY(-1px);}
+  .btn-outline{background:transparent;color:var(--text);border:1px solid var(--border);}
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* SECTIONS */
+  section{padding:5.5rem 3rem;position:relative;}
+  .section-label{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--accent);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:0.5rem;}
+  .section-title{font-family:'DM Serif Display',serif;font-size:clamp(1.8rem,3.5vw,2.5rem);color:var(--text);margin-bottom:2.8rem;}
+  .section-title span{color:var(--accent2);}
+
+  /* ABOUT */
+  #about{background:var(--bg2);}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start;}
+  .about-text p{color:var(--muted);margin-bottom:1rem;font-size:0.95rem;line-height:1.8;}
+  .about-text p strong{color:var(--text);}
+  .about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;}
+  .stat-num{font-family:'DM Serif Display',serif;font-size:2rem;color:var(--accent);display:block;}
+  .stat-label{font-size:0.75rem;color:var(--muted);}
+
+  /* SKILLS */
+  #skills{background:var(--bg);}
+  .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;}
+  .skill-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:border-color 0.2s,transform 0.2s;}
+  .skill-card:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .skill-card-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem;margin-bottom:0.9rem;}
+  .skill-card h3{font-size:0.82rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;color:var(--text);margin-bottom:0.9rem;}
+  .skill-tags{display:flex;flex-wrap:wrap;gap:0.35rem;}
+  .tag{background:rgba(255,255,255,0.04);border:1px solid var(--border);border-radius:4px;padding:0.18rem 0.5rem;font-family:'DM Mono',monospace;font-size:0.68rem;color:var(--muted);}
+
+  /* EXPERIENCE */
+  #experience{background:var(--bg2);}
+  .exp-item{display:grid;grid-template-columns:180px 1fr;gap:2rem;padding:2rem 0;border-bottom:1px solid var(--border);}
+  .exp-item:last-child{border-bottom:none;}
+  .exp-date{font-family:'DM Mono',monospace;font-size:0.73rem;color:var(--muted);padding-top:0.15rem;line-height:1.6;}
+  .exp-badge{display:inline-block;margin-top:0.5rem;background:rgba(79,142,247,0.1);border:1px solid rgba(79,142,247,0.25);border-radius:4px;padding:0.12rem 0.45rem;font-size:0.63rem;color:var(--accent);letter-spacing:0.06em;text-transform:uppercase;}
+  .exp-role{font-family:'DM Serif Display',serif;font-size:1.2rem;color:var(--text);margin-bottom:0.2rem;}
+  .exp-org{font-size:0.83rem;color:var(--accent2);margin-bottom:0.8rem;font-weight:500;}
+  .exp-bullets{list-style:none;padding:0;}
+  .exp-bullets li{font-size:0.86rem;color:var(--muted);padding:0.3rem 0 0.3rem 1.2rem;position:relative;line-height:1.65;}
+  .exp-bullets li::before{content:'';position:absolute;left:0;top:0.75rem;width:5px;height:5px;border-radius:50%;background:var(--accent);}
+  .exp-bullets li strong{color:var(--text);}
+
+  /* PROJECTS */
+  #projects{background:var(--bg);}
+  .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.4rem;}
+  .project-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1.6rem;transition:border-color 0.25s,transform 0.25s;display:flex;flex-direction:column;}
+  .project-card:hover{border-color:var(--accent2);transform:translateY(-4px);}
+  .project-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:0.7rem;}
+  .project-icon{font-size:1.3rem;}
+  .project-year{font-family:'DM Mono',monospace;font-size:0.66rem;color:var(--muted);background:var(--faint);padding:0.12rem 0.45rem;border-radius:4px;}
+  .project-title{font-family:'DM Serif Display',serif;font-size:1rem;color:var(--text);margin-bottom:0.4rem;line-height:1.3;}
+  .project-org{font-size:0.72rem;color:var(--accent);font-family:'DM Mono',monospace;margin-bottom:0.7rem;}
+  .project-desc{font-size:0.82rem;color:var(--muted);line-height:1.65;margin-bottom:1rem;flex:1;}
+  .project-stack{display:flex;flex-wrap:wrap;gap:0.3rem;}
+  .stack-tag{background:rgba(79,142,247,0.08);border:1px solid rgba(79,142,247,0.2);border-radius:4px;padding:0.12rem 0.45rem;font-family:'DM Mono',monospace;font-size:0.63rem;color:var(--accent);}
+
+  /* EDUCATION */
+  #education{background:var(--bg2);}
+  .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
+  .edu-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.8rem;transition:border-color 0.2s;}
+  .edu-card:hover{border-color:var(--accent2);}
+  .edu-degree{font-family:'DM Serif Display',serif;font-size:1.05rem;color:var(--text);margin-bottom:0.3rem;}
+  .edu-school{font-size:0.85rem;color:var(--accent2);font-weight:500;margin-bottom:0.3rem;}
+  .edu-period{font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);margin-bottom:0.7rem;}
+  .edu-courses{font-size:0.78rem;color:var(--muted);line-height:1.6;}
+
+  /* CONTACT */
+  #contact{background:var(--bg);}
+  .contact-inner{max-width:600px;margin:0 auto;text-align:center;}
+  .contact-inner p{color:var(--muted);margin-bottom:2rem;font-size:0.95rem;}
+  .contact-links{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;}
+  .contact-link{display:inline-flex;align-items:center;gap:0.5rem;padding:0.65rem 1.3rem;border-radius:8px;background:var(--card);border:1px solid var(--border);color:var(--text);text-decoration:none;font-size:0.83rem;transition:all 0.2s;}
+  .contact-link:hover{border-color:var(--accent);color:var(--accent);}
+
+  /* FOOTER */
+  footer{padding:1.8rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;font-family:'DM Mono',monospace;font-size:0.7rem;color:var(--muted);}
+
+  /* FADE */
+  .fade-in{opacity:0;transform:translateY(22px);transition:opacity 0.6s ease,transform 0.6s ease;}
+  .fade-in.visible{opacity:1;transform:none;}
+
+  @media(max-width:768px){
+    nav{padding:0.75rem 1.5rem;}
+    .nav-links{display:none;}
+    section{padding:4rem 1.5rem;}
+    #hero{padding:6rem 1.5rem 3rem;}
+    .hero-inner{flex-direction:column-reverse;gap:2rem;}
+
+    .about-grid,.edu-grid{grid-template-columns:1fr;}
+    .exp-item{grid-template-columns:1fr;gap:0.5rem;}
+    footer{flex-direction:column;gap:0.5rem;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">
+    <span class="nav-logo-main">Dhanus <span>CT</span> Ramesh</span>
+    <span class="nav-logo-full">Dhanus Chinnakalipatti Thilagaa Ramesh</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-glow2"></div>
+  <div class="hero-inner fade-in">
+    <div class="hero-content">
+      <div class="hero-tag">
+        <span></span> Available for Summer 2026 Internship
+      </div>
+      <h1 class="hero-name">Dhanus<br><em>CT Ramesh</em></h1>
+      <p class="hero-subtitle">
+        MS Bioinformatics at Northeastern University — building computational pipelines across multi-omics, single-cell genomics, and cheminformatics, with a foundation in Pharmacy and a focus on cancer immunology and precision medicine.
+      </p>
+      <div class="hero-meta">
+        <span>📍 Boston, MA</span>
+        <span>🎓 Northeastern University</span>
+        <span>🔬 Research Assistant</span>
+        <span>📅 Jan 2025 – Dec 2027</span>
+      </div>
+      <div class="hero-btns">
+        <a href="#projects" class="btn btn-primary">View Projects</a>
+        <a href="#contact" class="btn btn-outline">Get in Touch</a>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="fade-in">
+    <p class="section-label">// about me</p>
+    <h2 class="section-title">Biology meets <span>computation</span></h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I am a first-year Master's student in Bioinformatics at Northeastern University with a background in Pharmacy from KMCH College of Pharmacy, Tamil Nadu, India. My training bridges wet-lab biology intuition with rigorous computational analysis.</p>
+        <p>My work spans <strong>multi-omics integration</strong>, <strong>single-cell RNA-seq</strong>, <strong>epigenomics</strong>, <strong>cheminformatics</strong>, and <strong>cloud-based genomic pipelines</strong>. I am currently a Research Assistant building bioinformatics workflows for cancer immunology research at Bouvé College of Health Sciences.</p>
+        <p>From molecular docking and ADMET modeling in drug discovery to GATK-based variant calling pipelines on AWS — I work across the full spectrum of computational biology. Actively seeking Summer 2026 co-op and internship opportunities across the US.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <span class="stat-num">6+</span>
+          <span class="stat-label">Research Projects</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">99.2%</span>
+          <span class="stat-label">SNV Precision (WGS Pipeline)</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">0.95</span>
+          <span class="stat-label">AUC — ML Biomarker Model</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">15+</span>
+          <span class="stat-label">Bioinformatics Tools</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="fade-in">
+    <p class="section-label">// technical skills</p>
+    <h2 class="section-title">Tools & <span>Technologies</span></h2>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(79,142,247,0.1);">🐍</div>
+        <h3>Programming</h3>
+        <div class="skill-tags">
+          <span class="tag">Python</span><span class="tag">R</span><span class="tag">SQL</span><span class="tag">Bash</span><span class="tag">MATLAB</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(125,211,192,0.1);">📚</div>
+        <h3>Libraries & Frameworks</h3>
+        <div class="skill-tags">
+          <span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">Scikit-learn</span><span class="tag">Seurat</span><span class="tag">Scanpy</span><span class="tag">DESeq2</span><span class="tag">BioPython</span><span class="tag">Pandas</span><span class="tag">NumPy</span><span class="tag">Seaborn</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(240,160,90,0.1);">🧬</div>
+        <h3>Multi-Omics & Genomics</h3>
+        <div class="skill-tags">
+          <span class="tag">Bulk RNA-seq</span><span class="tag">scRNA-seq</span><span class="tag">Spatial Transcriptomics</span><span class="tag">GWAS / QTL</span><span class="tag">Variant Calling</span><span class="tag">Multi-Omics Integration</span><span class="tag">Biomarker Discovery</span><span class="tag">Epigenomics</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(240,160,90,0.12);">💊</div>
+        <h3>Cheminformatics & Drug Discovery</h3>
+        <div class="skill-tags">
+          <span class="tag">AutoDock Vina</span><span class="tag">Schrödinger</span><span class="tag">GROMACS</span><span class="tag">SwissADME</span><span class="tag">QSAR</span><span class="tag">ADMET</span><span class="tag">MD Simulation</span><span class="tag">Ligand Optimization</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(79,142,247,0.1);">🤖</div>
+        <h3>AI / ML & Data Science</h3>
+        <div class="skill-tags">
+          <span class="tag">Supervised ML</span><span class="tag">Unsupervised ML</span><span class="tag">CNN</span><span class="tag">Autoencoder</span><span class="tag">Predictive Modeling</span><span class="tag">Data Visualization</span><span class="tag">Model Validation</span>
+        </div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-card-icon" style="background:rgba(125,211,192,0.1);">⚙️</div>
+        <h3>Workflow & DevOps</h3>
+        <div class="skill-tags">
+          <span class="tag">Nextflow</span><span class="tag">Snakemake</span><span class="tag">Docker</span><span class="tag">Singularity</span><span class="tag">AWS</span><span class="tag">HPC / SLURM</span><span class="tag">Git</span><span class="tag">Galaxy</span><span class="tag">Jupyter</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="fade-in">
+    <p class="section-label">// experience</p>
+    <h2 class="section-title">Research <span>Experience</span></h2>
+    <div class="exp-item">
+      <div class="exp-date">Feb 2026 – Present<br><span class="exp-badge">Current</span></div>
+      <div>
+        <div class="exp-role">Research Assistant</div>
+        <div class="exp-org">Bouvé College of Health Sciences — Northeastern University, Boston, MA</div>
+        <ul class="exp-bullets">
+          <li>Developed single-cell and multi-omics bioinformatics pipelines integrating <strong>scRNA-seq, CITE-seq, and secretome profiling</strong> using Seurat, Scanpy, CellChat, Monocle3, and Harmony to characterize NK cell transcriptional states, BCR clonotype dynamics, and tumor microenvironment heterogeneity in DLBCL models.</li>
+          <li>Applied <strong>machine learning (Random Forest, XGBoost)</strong> and trajectory inference (scVelo, Monocle3) on high-dimensional single-cell feature matrices to predict NK cell cytotoxic outcomes and stratify immune exhaustion states within the tumor microenvironment.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exp-item">
+      <div class="exp-date">Jun 2024 – Jul 2024</div>
+      <div>
+        <div class="exp-role">Research Intern</div>
+        <div class="exp-org">Ethical Edufabrica Pvt. Ltd. — Chennai, Tamil Nadu, India</div>
+        <ul class="exp-bullets">
+          <li>Processed whole-genome and transcriptome datasets using <strong>FastQC, Trimmomatic, BWA, and GATK</strong>; implemented GWAS, QTL mapping, and bulk RNA-seq pipelines with PLINK, GEMMA, STAR, and DESeq2.</li>
+          <li>Conducted single-cell and spatial transcriptomic analyses using <strong>Seurat, Scanpy</strong> for cell-type clustering, normalization, and immune microenvironment profiling.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="fade-in">
+    <p class="section-label">// projects</p>
+    <h2 class="section-title">Selected <span>Work</span></h2>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-header"><span class="project-icon">🧫</span><span class="project-year">2025</span></div>
+        <div class="project-title">Spatial Transcriptomics Reconstruction from Bulk RNA-Seq</div>
+        <div class="project-org">Northeastern University</div>
+        <div class="project-desc">Integrated bulk RNA-seq, scRNA-seq, and 10x Visium spatial transcriptomics from a PDAC dataset using Bulk2Space, reconstructing pseudo-single-cell profiles with &gt;0.90 correlation to reference scRNA-seq. Applied KNN clustering, NLP-based transcriptomic embeddings, and Deep Forest models to map the tumor microenvironment.</div>
+        <div class="project-stack"><span class="stack-tag">Bulk2Space</span><span class="stack-tag">Seurat</span><span class="stack-tag">Scanpy</span><span class="stack-tag">Cell Ranger</span><span class="stack-tag">Space Ranger</span><span class="stack-tag">HPC/Slurm</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-header"><span class="project-icon">🧬</span><span class="project-year">2025</span></div>
+        <div class="project-title">Chromatin State Modeling & Regulatory Epigenomic Analysis</div>
+        <div class="project-org">Northeastern University</div>
+        <div class="project-desc">Processed multi-assay epigenomic datasets (ChIP-seq, DNase-seq, bisulfite-seq) to generate genome-wide regulatory tracks. Constructed 15–25 state ChromHMM models achieving &gt;92% recovery of annotated enhancer and promoter regions.</div>
+        <div class="project-stack"><span class="stack-tag">BWA/Bowtie2</span><span class="stack-tag">MACS2</span><span class="stack-tag">Bismark</span><span class="stack-tag">ChromHMM</span><span class="stack-tag">deepTools</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-header"><span class="project-icon">☁️</span><span class="project-year">2025</span></div>
+        <div class="project-title">Cloud-Enabled Variant Detection Benchmark</div>
+        <div class="project-org">Northeastern University</div>
+        <div class="project-desc">Built a Nextflow-based WGS variant-calling pipeline using GATK HaplotypeCaller, FreeBayes, and DeepVariant. Benchmarked against the GIAB truth set achieving 99.2% SNV precision, 98% recall, and F1 &gt;98.5% across HPC and AWS Batch.</div>
+        <div class="project-stack"><span class="stack-tag">Nextflow</span><span class="stack-tag">GATK</span><span class="stack-tag">DeepVariant</span><span class="stack-tag">AWS Batch</span><span class="stack-tag">Docker</span><span class="stack-tag">nf-core</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-header"><span class="project-icon">🦠</span><span class="project-year">2025</span></div>
+        <div class="project-title">Integrated 16S and Shotgun Microbiome Profiling</div>
+        <div class="project-org">Northeastern University</div>
+        <div class="project-desc">Implemented dual 16S rRNA amplicon analysis generating &gt;4000 high-resolution ASVs. Developed a shotgun metagenomics pipeline achieving &gt;95% host read depletion and profiling &gt;200 microbial species and &gt;150 metabolic pathways.</div>
+        <div class="project-stack"><span class="stack-tag">QIIME2</span><span class="stack-tag">DADA2</span><span class="stack-tag">KneadData</span><span class="stack-tag">MetaPhlAn3</span><span class="stack-tag">HUMAnN3</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-header"><span class="project-icon">🤖</span><span class="project-year">2025</span></div>
+        <div class="project-title">ML-Driven Multi-Omic Biomarker Prediction</div>
+        <div class="project-org">Northeastern University</div>
+        <div class="project-desc">Developed deep learning workflows to predict 400+ multi-omic biomarkers from H&E-stained whole-slide images across 32 cancer types. Achieved validation AUC of 0.95 ± 0.10, improving accuracy by 15% over baseline CNN architectures.</div>
+        <div class="project-stack"><span class="stack-tag">PyTorch</span><span class="stack-tag">CNN</span><span class="stack-tag">ROC-AUC</span><span class="stack-tag">HPC</span><span class="stack-tag">Python</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-header"><span class="project-icon">💊</span><span class="project-year">2023</span></div>
+        <div class="project-title">Cheminformatics-Guided Molecular Modeling for Anticancer Drug Discovery</div>
+        <div class="project-org">KMCH College of Pharmacy</div>
+        <div class="project-desc">Designed flavone and sulfonamide scaffolds and applied in-silico pipelines for CA IX/XII and bacterial enzyme targets. Correlated QSAR, ADMET, and MD-based analyses to predict stability, selectivity, and bioactivity.</div>
+        <div class="project-stack"><span class="stack-tag">AutoDock Vina</span><span class="stack-tag">Schrödinger</span><span class="stack-tag">GROMACS</span><span class="stack-tag">SwissADME</span><span class="stack-tag">QSAR</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="fade-in">
+    <p class="section-label">// education</p>
+    <h2 class="section-title">Academic <span>Background</span></h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div class="edu-degree">Master of Science in Bioinformatics</div>
+        <div class="edu-school">Northeastern University — Boston, MA, US</div>
+        <div class="edu-period">Jan 2025 – Dec 2027</div>
+        <div class="edu-courses">Relevant Courses: Transcriptomics, Multi-Omics, Machine Learning, Computational Methods, Programming, Statistics</div>
+      </div>
+      <div class="edu-card">
+        <div class="edu-degree">Bachelor of Pharmacy</div>
+        <div class="edu-school">KMCH College of Pharmacy — Tamil Nadu, India</div>
+        <div class="edu-period">Sep 2019 – Jan 2024</div>
+        <div class="edu-courses">Relevant Courses: Biotechnology, Cell & Molecular Biology, Computer-Aided Drug Design, Medicinal Chemistry</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-in">
+    <p class="section-label">// contact</p>
+    <h2 class="section-title" style="text-align:center;">Let's <span>Connect</span></h2>
+    <div class="contact-inner">
+      <p>Actively seeking Summer 2026 co-op and internship opportunities in bioinformatics, computational biology, and healthcare data science. Open to on-site roles anywhere in the US.</p>
+      <div class="contact-links">
+        <a href="mailto:chinnakalipattithi.d@northeastern.edu" class="contact-link">✉️ Email</a>
+        <a href="https://github.com/dhanus-ramesh" class="contact-link" target="_blank">🐙 GitHub</a>
+        <a href="https://linkedin.com/in/dhanus-ramesh" class="contact-link" target="_blank">💼 LinkedIn</a>
+        <a href="tel:+18573512939" class="contact-link">📞 (+1) 857-351-2939</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 Dhanus Chinnakalipatti Thilagaa Ramesh</span>
+  <span>Built with HTML · CSS · JS — Hosted on GitHub Pages</span>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if(window.scrollY >= s.offsetTop - 120) current = s.getAttribute('id'); });
+    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#'+current ? 'var(--accent)' : ''; });
+  });
+</script>
+</body>
+</html>
